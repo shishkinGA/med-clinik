@@ -51,6 +51,7 @@
       <svg class="map-svg" id="mapSvg" viewBox="0 6 100 44" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
       <div class="map-labels" id="mapLabels"></div>
     </div>
+    <ul class="map-mlist" id="mapMList"></ul>
   </section>
 
   <section class="sec sec-services" id="services" data-screen-label="Services">
@@ -524,9 +525,11 @@
       const halo = mk('circle', { r: 1.9, class: 'map-halo' });
       const dot = mk('circle', { r: 0.95, class: 'map-core' });
       const hit = mk('circle', { r: 4.5, class: 'map-hit' });
-      g.append(ping, halo, dot, hit);
+      const num = mk('text', { class: 'map-nodenum', x: 0, y: -2.2, 'text-anchor': 'middle' });
+      num.textContent = p.tag;
+      g.append(ping, halo, dot, hit, num);
       gNode.appendChild(g);
-      return { g, ping, halo, dot, hit, p, idx, links: [] };
+      return { g, ping, halo, dot, hit, num, p, idx, links: [] };
     });
 
     // связи (дуги) + бегущие импульсы
@@ -574,6 +577,14 @@
     window.addEventListener('resize', placeLabels);
     if (window.LENIS) { /* пересчёт после возможных сдвигов layout */ }
     setTimeout(placeLabels, 400);
+
+    // мобильный список филиалов (показывается на узких экранах вместо плавающих подписей)
+    const mlist = $('#mapMList');
+    if (mlist) mlist.innerHTML = M.points.map((p) => `
+      <li class="mm-item"><span class="mm-node"></span>
+        <span class="mm-tag">${p.tag}</span>
+        <span class="mm-name">${p.name}</span>
+        <span class="mm-sub">${p.sub}</span></li>`).join('');
 
     // длины дуг для импульсов
     requestAnimationFrame(() => linkEls.forEach((l) => { l.len = l.path.getTotalLength(); }));

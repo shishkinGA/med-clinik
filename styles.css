@@ -179,13 +179,29 @@ body.reduced .mw{opacity:1;filter:none;transform:none}
 .map-count-label{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);max-width:7ch;line-height:1.3}
 
 /* мобайл: карта компактнее, подписи скрыты в пользу списка-узлов */
+.map-mlist{display:none;list-style:none;grid-template-columns:1fr 1fr;gap:.7rem .9rem;margin-top:1.4rem}
+.mm-item{position:relative;display:grid;grid-template-columns:auto 1fr;grid-template-areas:"node tag" "node name" "node sub";
+  column-gap:.6rem;row-gap:.1rem;align-items:center;padding:.7rem .2rem;border-top:1px solid var(--hairline)}
+.mm-node{grid-area:node;width:9px;height:9px;border-radius:50%;align-self:start;margin-top:.35rem;
+  background:color-mix(in srgb,var(--accent) 88%,#5a4d2e);
+  box-shadow:0 0 10px 1px color-mix(in srgb,var(--accent) 60%,transparent)}
+.mm-tag{grid-area:tag;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.6rem;letter-spacing:.16em;
+  color:color-mix(in srgb,var(--accent) 60%,#5a4f38)}
+.mm-name{grid-area:name;font-family:var(--disp);font-weight:500;font-size:.92rem;line-height:1.15;color:var(--ink)}
+.mm-sub{grid-area:sub;font-size:.72rem;line-height:1.35;color:var(--ink-soft)}
+.map-nodenum{display:none;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:2.4px;
+  letter-spacing:.04em;fill:color-mix(in srgb,var(--accent) 62%,#5a4f38);font-weight:700}
 @media(max-width:760px){
-  .map-stage{height:62vh;min-height:380px}
-  .map-name{font-size:.8rem}.map-sub{display:none}
-  .map-label{max-width:8.5rem}
+  .map-stage{height:52vh;min-height:330px}
+  .map-labels{display:none}
+  .map-tick{display:none}
   .map-head{align-items:flex-start}
   .map-count{font-size:2.6rem}
+  .map-mlist{display:grid !important}
+  .map-nodenum{display:block}
+  .map-core{r:1.4}
 }
+@media(max-width:440px){.map-mlist{grid-template-columns:1fr}}
 body.reduced .map-label{opacity:1!important;visibility:visible!important}
 
 /* ---------- services: 3D-дек карточек ---------- */
@@ -405,3 +421,55 @@ body.reduced .tw-caret{display:none}
 .foot-links a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);transition:color .25s}
 .foot-links a:hover{color:var(--ink)}
 .foot-note{font-size:.68rem;color:rgba(28,27,24,.4)}
+
+/* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
+@media(max-width:600px){
+  .sec{padding:12vh 6vw}
+  .nav{padding:1rem 1.2rem}
+  .brand{font-size:.82rem}
+  .nav-cta{padding:.55em 1.15em;font-size:.66rem}
+  .sec-head{margin-bottom:2.2rem;gap:1rem}
+  .sec-title{font-size:clamp(1.7rem,8vw,2.4rem)}
+  .sec-label{font-size:.64rem;letter-spacing:.26em}
+  /* hero */
+  .sec-hero{padding:16vh 6vw 14vh;min-height:92vh}
+  .hero-h{font-size:clamp(2.1rem,10vw,3rem);max-width:14ch}
+  .hero-sub{font-size:.95rem}
+  .scroll-hint{left:6vw;bottom:2rem;font-size:.6rem}
+  /* manifesto */
+  .mani-text{font-size:clamp(1.3rem,6vw,1.7rem)}
+  /* map */
+  .map-head{gap:1.2rem}
+  .map-legend{align-self:flex-start}
+  .map-count{font-size:2.4rem}
+  .map-stage{border-radius:20px}
+  /* process — крупные числа и шаги компактнее */
+  .proc-label{top:10vh}
+  .proc-steps{height:20rem}
+  .proc-num{font-size:clamp(3rem,18vw,4.2rem)}
+  .proc-title{font-size:clamp(1.3rem,6vw,1.7rem)}
+  .proc-desc{font-size:.9rem;max-width:30ch}
+  .proc-progress{bottom:7vh}
+  /* services grid */
+  .svc-title{font-size:.95rem}
+  /* chat */
+  .chat-phone{width:100%;height:76vh;border-radius:26px}
+  .chat-bubble{max-width:84%;font-size:.86rem}
+  .chat-intro{font-size:.92rem}
+  /* CTA */
+  .cta-vow{font-size:clamp(1.7rem,8.5vw,2.6rem)}
+  .cta-sub{font-size:.92rem}
+  /* footer стопкой */
+  .foot-row{flex-direction:column;align-items:flex-start;gap:1.3rem}
+  .foot-links{gap:1.4rem;flex-wrap:wrap}
+}
+@media(max-width:380px){
+  .sec-title{font-size:1.55rem}
+  .hero-h{font-size:1.9rem}
+  .map-count{font-size:2rem}
+}
+/* отключаем кастомный курсор и тяжёлый blur на тач-устройствах */
+@media(hover:none){
+  #cursor{display:none!important}
+  body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:auto}
+}
